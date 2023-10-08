@@ -26,22 +26,23 @@ function clearGallery() {
 // funcja obsługująca proces wyszukiwania, wyświetlania obrazów i zarządzania przyciskiem "Load more"
 
 async function searchImages(event) {
-  if (!query) {
-    return;
-  }
   event.preventDefault(); // Zapobiega domyślnemu zachowaniu formularza, czyli odświeżeniu strony
   clearGallery(); // Wyczyszczenie zawartości galerii
 
   const newQuery = input.value.trim(); // Pobranie nowej frazy wyszukiwania z pola tekstowego
-  if (newQuery === query) {
-    page += 1;
-  } else {
+  if (newQuery !== query) {
     query = newQuery; // Zaktualizowanie frazy wyszukiwania i zresetowanie numeru strony
     page = 1;
+  } else {
+    page += 1;
   }
+
+  console.log('Query:', query);
 
   try {
     const images = await fetchGallery(query, page, perPage); // Wywołanie funkcji do pobrania obrazów
+
+    console.log('API Response:', images);
 
     if (images.totalHits === 0) {
       Notiflix.Notify.failure(
@@ -50,11 +51,13 @@ async function searchImages(event) {
     } else {
       createGallery(images);
       Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
-      if (images.totalHits > perPage) {
-        loadingButton.style.display = 'block';
-      } else {
-        loadingButton.style.display = 'none';
-      }
+      //   if (images.totalHits > perPage) {
+      //     loadingButton.style.display = 'block';
+      //   } else {
+      //     loadingButton.style.display = 'none';
+      //   }
+      loadingButton.style.display =
+        images.totalHits > perPage ? 'block' : 'none';
     }
   } catch (error) {
     handleErrors(error);
