@@ -1,0 +1,64 @@
+.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.gallery {
+  margin-top: 50px;
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.photo-card {
+  height: 240px;
+  width: 350px;
+  border-radius: 1em;
+  box-shadow: 0 10px 20px #dbdbdb;
+}
+
+.info {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  padding: 0 1.5em;
+  color: black;
+}
+
+input {
+  width: 50%;
+  appearance: none;
+  border: none;
+  outline: none;
+  border: 0.2em solid #26c0d3;
+  border-radius: 0.6em;
+  padding: 0.4em;
+  color: #2b4e75;
+}
+
+input::placeholder {
+  color: #26c0d3;
+}
+
+.search,
+.load-more {
+  border-radius: 8px;
+  border-style: none;
+  color: #03070c;
+  cursor: pointer;
+  height: 40px;
+  padding: 10px 16px;
+}
+.load-more {
+  display: block;
+  margin: 60px auto;
+}
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
