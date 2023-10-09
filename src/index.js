@@ -30,12 +30,8 @@ function searchImages(event) {
   clearGallery(); // Wyczyszczenie zawartości galerii
 
   const newQuery = input.value;
-  if (newQuery === query) {
-    page += 1;
-  } else {
-    query = newQuery; // Zaktualizowanie frazy wyszukiwania i zresetowanie numeru strony
-    page = 1;
-  }
+  query = newQuery; // Zaktualizowanie frazy wyszukiwania i zresetowanie numeru strony
+  page = 1;
 
   fetchGallery(query, page, perPage) // Wywołanie funkcji do pobrania obrazów
     .then(images => {
@@ -70,7 +66,7 @@ function createGallery(images) {
         downloads,
       }) => {
         return `<div class="photo-card"> <a href="${largeImageURL}" class="photo-card__link">
-  <img src="${webformatURL}" alt="${tags} class="photo-card__image"" loading="lazy" /></a>
+  <img src="${webformatURL}" alt="${tags}" class="photo-card__image" loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
       <b>Likes: ${likes}</b>
@@ -101,13 +97,6 @@ function createGallery(images) {
 }
 
 lightbox.refresh();
-
-// // funkcja do obsługi błędów
-
-// function handleErrors(error) {
-//   console.error('An error occured:', error);
-//   Notiflix.Notify.failure('An error occurred while fetching images.');
-// }
 
 // obsługa przycisku "Load more"
 
