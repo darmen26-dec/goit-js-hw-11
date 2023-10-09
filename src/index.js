@@ -16,8 +16,6 @@ let query = '';
 let page = 1;
 const perPage = 40;
 
-const lightbox = new SimpleLightbox('.photo-card a', {});
-
 // funkcja odpowiedzialna za wyczyszczenie zawartości galerii przed wyświetleniem nowych wyników wyszukiwania
 function clearGallery() {
   gallery.innerHTML = '';
@@ -87,6 +85,8 @@ function createGallery(images) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
 
+  const lightbox = new SimpleLightbox('.photo-card a', {});
+
   const displayedHits = document.getElementsByClassName('info').length;
   if (displayedHits >= images.totalHits) {
     loadingButton.classList.add('is-hidden');
@@ -94,9 +94,8 @@ function createGallery(images) {
       "We're sorry, but you've reached the end of search results."
     );
   }
+  lightbox.refresh();
 }
-
-lightbox.refresh();
 
 // obsługa przycisku "Load more"
 
