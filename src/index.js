@@ -23,16 +23,18 @@ function clearGallery() {
 
 // funcja obsługująca proces wyszukiwania, wyświetlania obrazów i zarządzania przyciskiem "Load more"
 
-function searchImages(event) {
+async function searchImages(event) {
   event.preventDefault(); // Zapobiega domyślnemu zachowaniu formularza, czyli odświeżeniu strony
-  clearGallery(); // Wyczyszczenie zawartości galerii
 
   const newQuery = input.value;
-  query = newQuery; // Zaktualizowanie frazy wyszukiwania i zresetowanie numeru strony
-  page = 1;
+  if (newQuery !== query) {
+    clearGallery(); // Wyczyszczenie zawartości galerii
+    query = newQuery; // Zaktualizowanie frazy wyszukiwania i zresetowanie numeru strony
+    page = 1;
 
-  fetchGallery(query, page, perPage) // Wywołanie funkcji do pobrania obrazów
-    .then(images => {
+    try {
+      const images = await fetchGallery(query, page, perPage); // Wywołanie funkcji do pobrania obrazów
+
       console.log(images);
       if (images.totalHits === 0) {
         Notiflix.Notify.failure(
@@ -43,10 +45,14 @@ function searchImages(event) {
         Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
         if (images.totalHits > perPage) {
           loadingButton.classList.remove('is-hidden');
+        } else {
+          loadingButton.classList.add('is-hidden');
         }
       }
-    })
-    .catch(error => console.log(error));
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 }
 
 // funkcja używana do generowania i wyświetlania galerii obrazów na stronie internetowej na podstawie dostarczonych danych
